@@ -11,9 +11,9 @@ def login_page():
     window.title("Login")
     window.geometry('500x400')
     window.configure(bg='dark slate grey')
-    window.iconbitmap('c:\\Users\\Matty\\Downloads\\DALL·E 2023-09-26 17.45.01.ico')
+    window.iconbitmap('Rolodex_icon.ico')
 
-    logo = Image.open("C:\\Users\\matty\\Downloads\\DALL·E 2023-09-26 17.45.01.png")
+    logo = Image.open("Rolodex_logo.png")
     logo_resized = logo.resize((100, 100))
     logo_image = ImageTk.PhotoImage(logo_resized)
 
@@ -28,7 +28,7 @@ def login_page():
                               fg="navajo white", highlightbackground='navajo white', highlightthickness=2)
     login_button = tk.Button(frame, text="Login", bg="navajo white", fg="dark slate grey",
                              font=("Lucida Sans Typewriter", 20, 'bold'), highlightbackground='navajo white', highlightthickness=1, command=login)
-    logo_label = tk.Label(frame, image=logo_image)
+    logo_label = tk.Label(frame, image=logo_image, highlightbackground='navajo white')
 
     window.grid_rowconfigure(0, weight=1)
     window.grid_columnconfigure(0, weight=1)
