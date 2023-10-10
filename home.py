@@ -65,9 +65,18 @@ def home_page():
     network_tile = app_tile(1, 0, 10, "Network", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
                          'navajo white', 'navajo white', 1)
     network_tile.create_tile()
-    Health_tile = app_tile(2, 0, 10, "Health", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
+    health_tile = app_tile(2, 0, 10, "Health", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
                             'navajo white', 'navajo white', 1)
-    Health_tile.create_tile()
+    health_tile.create_tile()
+    finance_tile = app_tile(3, 0, 10, "Finance", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
+                           'navajo white', 'navajo white', 1)
+    finance_tile.create_tile()
+    calender_tile = app_tile(4, 0, 10, "Calender", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
+                            'navajo white', 'navajo white', 1)
+    calender_tile.create_tile()
+
+    frame.grid_rowconfigure(1, weight=0)  # edit weights once rest of page design is finished
+    frame.grid_columnconfigure(0, weight=0)
 
     update_time()
 
