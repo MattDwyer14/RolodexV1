@@ -74,14 +74,13 @@ def blank_page():
     window.configure(bg='dark slate grey')
     window.iconbitmap('Rolodex_icon.ico')
 
-    logo = Image.open("Rolodex_logo.png")
-    logo_resized = logo.resize((65, 65))
-    logo_image = ImageTk.PhotoImage(logo_resized)
+    logo = Image.open("Rolodex_logo.png").resize((65, 65))
+    logo_image = ImageTk.PhotoImage(logo)
     border_thickness = 3
-    canvas_width = logo_resized.width + 2 * border_thickness
-    canvas_height = logo_resized.height + 2 * border_thickness
-    canvas = tk.Canvas(window, width=canvas_width, height=canvas_height, bg='navajo white', bd=0, highlightthickness=0)
-    canvas.create_image(canvas_width / 2, canvas_height / 2, image=logo_image)
+    canvas = tk.Canvas(window, width=logo.width + 2 * border_thickness, height=logo.height + 2 * border_thickness,
+                       bg='navajo white', bd=0, highlightthickness=0)
+    canvas.create_image((logo.width + 2 * border_thickness) / 2, (logo.height + 2 * border_thickness) / 2,
+                        image=logo_image)
     canvas.grid(row=0, column=3, sticky="e")
 
     window.grid_rowconfigure(0, weight=0)  # title's row
