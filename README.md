@@ -11,3 +11,7 @@ For example:
 
 Whether or not there is much value in the ability to view this info is irrelevant 
 it's just an easy dataset to work with whilst im developing it.
+
+
+For now i will start by adding a journaling application within RolodexV1 as I have wanted
+to create one for myself for a while.
