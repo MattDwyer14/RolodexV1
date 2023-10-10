@@ -11,6 +11,6 @@ while running:
         print(verified, "after")
 
     if verified:
-        home_page()
+        blank_page()
 
 

@@ -58,13 +58,15 @@ def home_setup(frame):
 
 
 def update_time():
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    date_time.config(text=current_time)
+    current_time = datetime.now().strftime('%H:%M:%S')
+    time.config(text=current_time)
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    date.config(text=current_date)
     window.after(1000, update_time)
 
 
 def blank_page():
-    global date_time, window, frame
+    global date, time, window, frame
 
     window = tk.Tk()
     window.title("Rolodex.V1")
@@ -75,12 +77,17 @@ def blank_page():
     logo = Image.open("Rolodex_logo.png")
     logo_resized = logo.resize((65, 65))
     logo_image = ImageTk.PhotoImage(logo_resized)
-    logo_label = tk.Label(image=logo_image, highlightthickness=0, highlightbackground='navajo white')
+    border_thickness = 3
+    canvas_width = logo_resized.width + 2 * border_thickness
+    canvas_height = logo_resized.height + 2 * border_thickness
+    canvas = tk.Canvas(window, width=canvas_width, height=canvas_height, bg='navajo white', bd=0, highlightthickness=0)
+    canvas.create_image(canvas_width / 2, canvas_height / 2, image=logo_image)
+    canvas.grid(row=0, column=3, sticky="e")
 
     window.grid_rowconfigure(0, weight=0)  # title's row
     window.grid_rowconfigure(1, weight=1)  # canvas's row
-    window.grid_columnconfigure(0, weight=0)# canvas's column
-    window.grid_columnconfigure(1, weight=1)# canvas's column
+    window.grid_columnconfigure(0, weight=0)  # canvas's column
+    window.grid_columnconfigure(1, weight=1)  # canvas's column
 
     title = tk.Label(text="Rolodex.V1", bg='dark slate grey', fg='navajo white', font=("Lucida Sans Typewriter", 40))
     title.grid(row=0, column=0, sticky="sw")
@@ -88,11 +95,16 @@ def blank_page():
     frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
     frame.grid(row=1, column=0, sticky="nsew", columnspan=4)
 
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    date_time = tk.Label(text=current_time, bg='dark slate grey', fg='navajo white',
-                         font=("Lucida Sans Typewriter", 15))
-    date_time.grid(row=0, column=2, sticky='se', padx=10)
-    logo_label.grid(row=0, column=3, sticky="e")
+    date_time_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
+    date_time_frame.grid(row=0, column=2, sticky="nsew", columnspan=1)
+    current_time = datetime.now().strftime('%H:%M:%S')
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    date = tk.Label(date_time_frame, text=current_date, bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15))
+    time = tk.Label(date_time_frame, text=current_time, bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15))
+    date.grid(row=0, column=0, sticky='se', padx=10)
+    time.grid(row=1, column=0, sticky='se', padx=10)
 
     home_setup(frame)
 
