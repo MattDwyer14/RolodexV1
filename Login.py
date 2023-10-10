@@ -34,9 +34,9 @@ def login_page():
     window.grid_columnconfigure(0, weight=1)
 
     login_label.grid(row=0, column=0, pady=15)
-    username_label.grid(row=1, column=0,padx=30)
+    username_label.grid(row=1, column=0,padx=10)
     username_entry.grid(row=1, column=1, pady=20)
-    password_label.grid(row=2, column=0, padx=30)
+    password_label.grid(row=2, column=0, padx=10)
     password_entry.grid(row=2, column=1, pady=20)
     login_button.grid(row=3, column=0, columnspan=2, pady=20)
     logo_label.grid(row=0, column=1,pady= 15)
