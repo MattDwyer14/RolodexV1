@@ -2,6 +2,7 @@ import tkinter as tk
 from datetime import datetime
 from PIL import ImageTk, Image
 
+subtitle_tile = None
 
 class app_tile:
 
@@ -28,9 +29,14 @@ class app_tile:
 
 
 def subtitle(app_tile_instance):
-    subtitle = tk.Label(text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
+    global subtitle_tile
+    if subtitle_tile is None:
+        subtitle_tile = tk.Label(text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
                         font=("Lucida Sans Typewriter", 15))
-    subtitle.grid(row=0, column=1, sticky="sw")
+        subtitle_tile.grid(row=0, column=1, sticky="sw")
+
+    else:
+        subtitle_tile.config(text=app_tile_instance.text)
 
 
 def home_setup(frame):
