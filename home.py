@@ -5,9 +5,10 @@ from PIL import ImageTk, Image
 
 class app_tile:
 
-    def __init__(self, row, column, width, text, font, function, background_colour, text_colour, highlight_background,
-                 highlight_thickness):
+    def __init__(self, frame, row, column, width, text, font, function, background_colour, text_colour,
+                 highlight_background, highlight_thickness):
 
+        self.frame = frame
         self.row = row
         self.column = column
         self.width = width
@@ -20,32 +21,33 @@ class app_tile:
         self.highlight_thickness = highlight_thickness
 
     def create_tile(self):
-        tile = tk.Button(frame, text=self.text, bg=self.background, fg=self.text_colour, font=self.font,
+        tile = tk.Button(self.frame, text=self.text, bg=self.background, fg=self.text_colour, font=self.font,
                          highlightbackground=self.highlight_background, highlightthickness=self.highlight_thickness,
                          command=self.function, width=self.width)
         tile.grid(row=self.row, column=self.column)
 
 
-def journal():
-    subtitle = tk.Label(text="Journal", bg='dark slate grey', fg='navajo white', font=("Lucida Sans Typewriter", 15))
+def subtitle(app_tile_instance):
+    subtitle = tk.Label(text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
+                        font=("Lucida Sans Typewriter", 15))
     subtitle.grid(row=0, column=1, sticky="sw")
 
 
-def home_setup():
-    journal_tile = app_tile(0, 0, 10, "Journal", ("Lucida Sans Typewriter", 16, 'bold'), journal, 'dark slate grey',
-                            'navajo white', 'navajo white', 1)
+def home_setup(frame):
+    journal_tile = app_tile(frame, 0, 0, 10, "Journal", ("Lucida Sans Typewriter", 16, 'bold'),
+                            lambda: subtitle(journal_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     journal_tile.create_tile()
-    network_tile = app_tile(1, 0, 10, "Network", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
-                            'navajo white', 'navajo white', 1)
+    network_tile = app_tile(frame, 1, 0, 10, "Network", ("Lucida Sans Typewriter", 16, 'bold'),
+                            lambda: subtitle(network_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     network_tile.create_tile()
-    health_tile = app_tile(2, 0, 10, "Health", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
-                           'navajo white', 'navajo white', 1)
+    health_tile = app_tile(frame, 2, 0, 10, "Health", ("Lucida Sans Typewriter", 16, 'bold'),
+                            lambda: subtitle(health_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     health_tile.create_tile()
-    finance_tile = app_tile(3, 0, 10, "Finance", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
-                            'navajo white', 'navajo white', 1)
+    finance_tile = app_tile(frame, 3, 0, 10, "Finance", ("Lucida Sans Typewriter", 16, 'bold'),
+                            lambda: subtitle(finance_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     finance_tile.create_tile()
-    calender_tile = app_tile(4, 0, 10, "Calender", ("Lucida Sans Typewriter", 16, 'bold'), None, 'dark slate grey',
-                             'navajo white', 'navajo white', 1)
+    calender_tile = app_tile(frame, 4, 0, 10, "Calender", ("Lucida Sans Typewriter", 16, 'bold'),
+                            lambda: subtitle(calender_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     calender_tile.create_tile()
 
 
@@ -55,7 +57,7 @@ def update_time():
     window.after(1000, update_time)
 
 
-def home_page():
+def blank_page():
     global date_time, window, frame
 
     window = tk.Tk()
@@ -86,7 +88,7 @@ def home_page():
     date_time.grid(row=0, column=2, sticky='se', padx=10)
     logo_label.grid(row=0, column=3, sticky="e")
 
-    home_setup()
+    home_setup(frame)
 
     frame.grid_rowconfigure(1, weight=0)  # edit weights once rest of page design is finished
     frame.grid_columnconfigure(0, weight=0)
@@ -96,4 +98,4 @@ def home_page():
     window.mainloop()
 
 
-home_page()
+blank_page()
