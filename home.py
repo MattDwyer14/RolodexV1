@@ -41,7 +41,7 @@ class app_tile:
             clear_frame(app_tile_instance.affecting_frame)
             subtitle_tile = tk.Label(window, text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
                         font=("Lucida Sans Typewriter", 15))
-            subtitle_tile.grid(row=0, column=1, sticky="sw")
+            subtitle_tile.grid(row=0, column=2, sticky="w")
             if app_tile_instance.text == 'Journal':
                 launch_journal(info_frame)
             else:
@@ -92,37 +92,41 @@ def blank_page():
 
     window = tk.Tk()
     window.title("Rolodex.V1")
-    window.geometry('750x550')
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    window.geometry(f"{screen_width}x{screen_height}+0+0")
     window.configure(bg='dark slate grey')
     window.iconbitmap('Rolodex_icon.ico')
 
-    logo = Image.open("Rolodex_logo.png").resize((65, 65))
+    logo = Image.open("Rolodex_logo.png").resize((80, 80))
     logo_image = ImageTk.PhotoImage(logo)
     border_thickness = 3
     canvas = tk.Canvas(window, width=logo.width + 2 * border_thickness, height=logo.height + 2 * border_thickness,
                        bg='navajo white', bd=0, highlightthickness=0)
     canvas.create_image((logo.width + 2 * border_thickness) / 2, (logo.height + 2 * border_thickness) / 2,
                         image=logo_image)
-    canvas.grid(row=0, column=3, sticky="e")
+    canvas.grid(row=0, column=4, sticky="e")
 
     window.grid_rowconfigure(0, weight=0)  # title's row
-    window.grid_rowconfigure(1, weight=1)  # canvas's row
+    window.grid_rowconfigure(1, weight=1, minsize= 10)  # canvas's row
     window.grid_columnconfigure(0, weight=0)  # canvas's column
     window.grid_columnconfigure(1, weight=1)  # canvas's column
 
-    title = tk.Label(text="Rolodex.V1", bg='dark slate grey', fg='navajo white', font=("Lucida Sans Typewriter", 40))
-    title.grid(row=0, column=0, sticky="sw")
+    title = tk.Label(text="Rolodex.V1", bg='dark slate grey', fg='navajo white', 
+                     font=("Lucida Sans Typewriter", 50))
+    title.grid(row=0, column=1, sticky="w")
 
     frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
-    frame.grid(row=1, column=0, sticky="nsew")
-    frame.grid_columnconfigure(1, weight=0)  # edit weights once rest of page design is finished
-    frame.grid_columnconfigure(0, minsize=10, weight=1)
+    frame.grid(row=1, column=0, sticky="nsew", columnspan=1)
+    frame.grid_columnconfigure(0, minsize=10, weight=0)
 
     info_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
     info_frame.grid(row=1, column=1, sticky="nsew", columnspan=4)
+    info_frame.grid_columnconfigure(0, weight=1) 
+
 
     date_time_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
-    date_time_frame.grid(row=0, column=2, sticky="nsew", columnspan=1)
+    date_time_frame.grid(row=0, column=3, sticky="nsew", columnspan=1)
     current_time = datetime.now().strftime('%H:%M:%S')
     current_date = datetime.now().strftime('%Y-%m-%d')
     date = tk.Label(date_time_frame, text=current_date, bg='dark slate grey', fg='navajo white',

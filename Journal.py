@@ -26,7 +26,7 @@ class journal_tile:
         tile.grid(row=self.row, column=self.column)
 
 def new_entry(frame):
-    entry = journal_tile(frame, 0, 2, 10, datetime.now().strftime('%H:%M:%S'), ("Lucida Sans Typewriter", 16, 'bold'), new_entry
+    entry = journal_tile(frame, 0, 1, 10, datetime.now().strftime('%H:%M:%S'), ("Lucida Sans Typewriter", 16, 'bold'), new_entry
                          , 'dark slate grey', 'navajo white', 'navajo white', 1)
 
 def launch_journal(frame):
