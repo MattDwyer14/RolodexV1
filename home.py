@@ -1,6 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 from PIL import ImageTk, Image
+from Journal import *
 
 subtitle_tile = None
 
@@ -27,33 +28,35 @@ class app_tile:
                          command=self.function, width=self.width)
         tile.grid(row=self.row, column=self.column)
 
-
-def subtitle(app_tile_instance):
-    global subtitle_tile
-    if subtitle_tile is None:
-        subtitle_tile = tk.Label(text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
+    def subtitle(app_tile_instance):
+        global subtitle_tile
+        if subtitle_tile is None:
+            subtitle_tile = tk.Label(text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
                         font=("Lucida Sans Typewriter", 15))
-        subtitle_tile.grid(row=0, column=1, sticky="sw")
+            subtitle_tile.grid(row=0, column=1, sticky="sw")
 
-    else:
-        subtitle_tile.config(text=app_tile_instance.text)
+        else:
+            subtitle_tile.config(text=app_tile_instance.text)
+
+
+
 
 
 def home_setup(frame):
     journal_tile = app_tile(frame, 0, 0, 10, "Journal", ("Lucida Sans Typewriter", 16, 'bold'),
-                            lambda: subtitle(journal_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
+                            lambda: app_tile.subtitle(journal_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     journal_tile.create_tile()
     network_tile = app_tile(frame, 1, 0, 10, "Network", ("Lucida Sans Typewriter", 16, 'bold'),
-                            lambda: subtitle(network_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
+                            lambda: app_tile.subtitle(network_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     network_tile.create_tile()
     health_tile = app_tile(frame, 2, 0, 10, "Health", ("Lucida Sans Typewriter", 16, 'bold'),
-                            lambda: subtitle(health_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
+                            lambda: app_tile.subtitle(health_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     health_tile.create_tile()
     finance_tile = app_tile(frame, 3, 0, 10, "Finance", ("Lucida Sans Typewriter", 16, 'bold'),
-                            lambda: subtitle(finance_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
+                            lambda: app_tile.subtitle(finance_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     finance_tile.create_tile()
     calender_tile = app_tile(frame, 4, 0, 10, "Calender", ("Lucida Sans Typewriter", 16, 'bold'),
-                            lambda: subtitle(calender_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
+                            lambda: app_tile.subtitle(calender_tile), 'dark slate grey', 'navajo white', 'navajo white', 1)
     calender_tile.create_tile()
 
 
