@@ -1,7 +1,7 @@
 import tkinter as tk
 
 root = tk.Tk()
-root.title("Learning Page")
+root.title("Learning Page") 
 root.geometry('500x350')
 
 
