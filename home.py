@@ -145,4 +145,4 @@ def blank_page():
     window.mainloop()
 
 
-blank_page()
+#blank_page()
