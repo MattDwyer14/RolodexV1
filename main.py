@@ -12,5 +12,3 @@ while running:
 
     if verified:
         blank_page()
-
-

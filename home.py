@@ -40,7 +40,7 @@ class app_tile:
         if subtitle_tile is None:
             clear_frame(app_tile_instance.affecting_frame)
             subtitle_tile = tk.Label(window, text=app_tile_instance.text, bg='dark slate grey', fg='navajo white',
-                        font=("Lucida Sans Typewriter", 15))
+                        font=("Lucida Sans Typewriter", 20))
             subtitle_tile.grid(row=0, column=2, sticky="w")
             if app_tile_instance.text == 'Journal':
                 launch_journal(info_frame)
@@ -138,7 +138,11 @@ def blank_page():
 
     home_setup(frame)
 
-    
+    def on_closing():
+        window.destroy() 
+
+    window.protocol("WM_DELETE_WINDOW", on_closing)
+    window.mainloop()
 
     update_time()
 

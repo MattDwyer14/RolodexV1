@@ -42,6 +42,12 @@ def login_page():
     logo_label.grid(row=0, column=1,pady= 15)
 
     frame.grid(row=0, column=0, pady=20)
+    
+    def on_closing():
+        window.destroy() 
+
+    window.protocol("WM_DELETE_WINDOW", on_closing)
+    window.mainloop()
 
     window.mainloop()
     return verified
