@@ -8,7 +8,7 @@ running = True
 while running:
     if not verified:
         verified = login_page()
-        print(verified, "after")
+    
+    if verified: 
+        ended = blank_page()
 
-    if verified:
-        blank_page()

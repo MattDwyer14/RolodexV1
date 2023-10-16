@@ -139,7 +139,7 @@ def blank_page():
     home_setup(frame)
 
     def on_closing():
-        window.destroy() 
+        exit()
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
     window.mainloop()

@@ -44,11 +44,11 @@ def login_page():
     frame.grid(row=0, column=0, pady=20)
     
     def on_closing():
-        window.destroy() 
+        exit() 
+        
+
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
-    window.mainloop()
-
     window.mainloop()
     return verified
 
