@@ -45,10 +45,9 @@ def login_page():
     
     def on_closing():
         exit() 
-        
-
-
+    
     window.protocol("WM_DELETE_WINDOW", on_closing)
+    
     window.mainloop()
     return verified
 
