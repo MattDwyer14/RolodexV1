@@ -18,19 +18,25 @@ def add_entry_mode():
 
     entry_name_label = tk.Label(entry_frame, text="Entry Name: ", bg='dark slate grey', fg='navajo white', 
                                 font=("Lucida Sans Typewriter", 15))
-    entry_name_label.grid(row=0, column=0, sticky='ne')
+    entry_name_label.grid(row=0, column=0, sticky='ne', pady=5)
     entry_name =  tk.Entry(entry_frame, width= 50, bg='dark slate grey', fg='navajo white', 
                            font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                            highlightthickness=3)
-    entry_name.grid(row=0, column=1, sticky='w')
+    entry_name.grid(row=0, column=1, sticky='w', pady=5)
 
     entry_label = tk.Label(entry_frame, text="Entry: ", bg='dark slate grey', fg='navajo white', 
                                 font=("Lucida Sans Typewriter", 15))
-    entry_label.grid(row=1, column=0, sticky='ne')
+    entry_label.grid(row=1, column=0, sticky='ne', pady=5)
+
     entry =  tk.Text(entry_frame, width=90, height=15, bg='dark slate grey', fg='navajo white', 
                       font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                       highlightthickness=3)
-    entry.grid(row=1, column=1, sticky='nw')
+    entry.grid(row=1, column=1, sticky='nw', pady=5)
+
+    submit_button = tk.Button(entry_frame, text="Submit", bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15))
+    submit_button.grid(row=2, column=1, sticky='nw', pady=5)
+
 
 def blank_page():
     global time, date, window, entry_frame
@@ -70,14 +76,17 @@ def blank_page():
     title.grid(row=0, column=0, columnspan=1, sticky="w")
 
     #defining date and time and positioning label
-    date_time_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
-    date_time_frame.grid(row=0, column=2, sticky="nsw", columnspan=1)
     current_time = datetime.now().strftime('%H:%M:%S')
     current_date = datetime.now().strftime('%Y-%m-%d')
+
+    date_time_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
+    date_time_frame.grid(row=0, column=2, sticky="nsw", columnspan=1)
+
     date = tk.Label(date_time_frame, text=current_date, bg='dark slate grey', fg='navajo white',
                     font=("Lucida Sans Typewriter", 15))
     time = tk.Label(date_time_frame, text=current_time, bg='dark slate grey', fg='navajo white',
                     font=("Lucida Sans Typewriter", 15))
+    
     date.grid(row=0, column=0, sticky='se', padx=10)
     time.grid(row=1, column=0, sticky='se', padx=10)
 
@@ -92,7 +101,6 @@ def blank_page():
         exit()
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
-
 
     update_time()
 
