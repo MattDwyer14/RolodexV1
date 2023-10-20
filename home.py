@@ -11,10 +11,14 @@ def update_time():
     date.config(text=current_date)
     window.after(1000, update_time)
 
+def bring_frame_to_front(frame):
+    frame.lift()
+
 def add_entry_mode():
     global entry_frame_submit
     
-    tk.Frame.lift(entry_frame_submit)
+    bring_frame_to_front(entry_frame_submit)
+
     # entry box for name and its corresponing label
     entry_name_label = tk.Label(entry_frame_submit, text="Entry Name: ", bg='dark slate grey', fg='navajo white', 
                                 font=("Lucida Sans Typewriter", 15))
@@ -56,8 +60,8 @@ def add_entry_mode():
 def fetch():
     global entry_frame_view
 
-    tk.Frame.lift(entry_frame_view)
-    
+    bring_frame_to_front(entry_frame_view)
+
     entries = fetch_entries_from_db()
     print_entries = ''
     if entries == []:
@@ -133,8 +137,8 @@ def blank_page():
 
     #show entries button
     show_entries = tk.Button(journal_tile, text="Show Entries", bg='dark slate grey', fg='navajo white',
-                    font=("Lucida Sans Typewriter", 15))
-    show_entries.grid(row=0, column=0, sticky='nesw', command=fetch())
+                    font=("Lucida Sans Typewriter", 15), command=fetch)
+    show_entries.grid(row=0, column=0, sticky='nesw')
 
 
     def on_closing():
