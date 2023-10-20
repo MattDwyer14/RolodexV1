@@ -14,6 +14,10 @@ def update_time():
 def bring_frame_to_front(frame):
     frame.lift()
 
+def clear_frame_entries(frame):
+    for widget in frame.winfo_children():
+        widget.delete(0, tk.END)
+
 def add_entry_mode():
     global entry_frame_submit
     
@@ -61,7 +65,8 @@ def fetch():
     global entry_frame_view
 
     bring_frame_to_front(entry_frame_view)
-
+    clear_frame_entries(entry_frame_view)
+    print_entries = ''
     entries = fetch_entries_from_db()
     print_entries = ''
     if entries == []:
