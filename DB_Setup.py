@@ -22,4 +22,4 @@ def database_setup():
     #close connection when finished
     conn.close()
 
-#database_setup()
+database_setup()

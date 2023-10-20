@@ -65,18 +65,23 @@ def fetch():
     global entry_frame_view
 
     bring_frame_to_front(entry_frame_view)
-    clear_frame_entries(entry_frame_view)
-    print_entries = ''
+    #clear_frame_entries(entry_frame_view)
     entries = fetch_entries_from_db()
-    print_entries = ''
+    
     if entries == []:
         pass
     else:
-        for entry in entries[0]:
-            print_entries += str(entry) + "\n"
+        row_num =-1
+        for entry in reversed(entries):
+            row_num +=1
+            print_entries = ''
+            for part in entry:
+                print_entries += str(part) + "\n"
 
-        entry_label = tk.Label(entry_frame_view, text=print_entries)
-        entry_label.grid()
+            entry_label = tk.Label(entry_frame_view, text=print_entries, bg='dark slate grey', fg='navajo white', 
+                        font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
+                        highlightthickness=3, width=110, wraplength=1000)
+            entry_label.grid(row=row_num, columnspan=5, sticky='ns', padx=15)
 
 
 def blank_page():
@@ -100,7 +105,7 @@ def blank_page():
     entry_frame_view = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
                                highlightthickness=3)
     entry_frame_view.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)
-
+  
     #loading logo image from program files
     logo = Image.open("Rolodex_logo.png").resize((80, 80))
     logo_image = ImageTk.PhotoImage(logo)
