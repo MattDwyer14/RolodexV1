@@ -2,18 +2,35 @@
 #to interact with the database
 
 import sqlite3
-from DB_Setup import *
 
-def submit(entry_name, entry):
-    conn = sqlite3.connect('journal.db')
+def submit_entry(entry_name, date_time, entry):
+    conn = sqlite3.connect('Rolodex.db')
     #create cursor to interact with database
     c = conn.cursor()
 
+    #insert entry info into table
     c.execute('''
-        INSERT
-    ''')
+        INSERT INTO journal (date_time, entry_name, entry)
+        VALUES (?, ?, ?)
+    ''', (date_time, entry_name, entry))
 
     #commit changes to databases after every change
     conn.commit()
     #close connection when finished
     conn.close()
+
+def fetch_entries_from_db():
+    conn = sqlite3.connect('Rolodex.db')
+    #create cursor to interact with database
+    c = conn.cursor()
+
+    #fetch entry info into table
+    c.execute('SELECT *, oid FROM journal')
+    entries = c.fetchall()
+    print(entries)
+    
+    #commit changes to databases after every change
+    conn.commit()
+    #close connection when finished
+    conn.close()
+    return entries

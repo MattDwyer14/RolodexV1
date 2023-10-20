@@ -12,44 +12,66 @@ def update_time():
     window.after(1000, update_time)
 
 def add_entry_mode():
-    global window
+    global entry_frame_submit
     
-    entry_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
-                               highlightthickness=3)
-    entry_frame.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)
-
+    tk.Frame.lift(entry_frame_submit)
     # entry box for name and its corresponing label
-    entry_name_label = tk.Label(entry_frame, text="Entry Name: ", bg='dark slate grey', fg='navajo white', 
+    entry_name_label = tk.Label(entry_frame_submit, text="Entry Name: ", bg='dark slate grey', fg='navajo white', 
                                 font=("Lucida Sans Typewriter", 15))
     entry_name_label.grid(row=0, column=0, sticky='ne', pady=5)
 
-    entry_name =  tk.Entry(entry_frame, width= 50, bg='dark slate grey', fg='navajo white', 
+    entry_name =  tk.Entry(entry_frame_submit, width= 50, bg='dark slate grey', fg='navajo white', 
                            font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                            highlightthickness=3)
     entry_name.grid(row=0, column=1, sticky='w', pady=5)
 
     # entry box for entry body and its corresponding label
-    entry_label = tk.Label(entry_frame, text="Entry: ", bg='dark slate grey', fg='navajo white', 
+    entry_label = tk.Label(entry_frame_submit, text="Entry: ", bg='dark slate grey', fg='navajo white', 
                                 font=("Lucida Sans Typewriter", 15))
     entry_label.grid(row=1, column=0, sticky='ne', pady=5)
 
-    entry =  tk.Text(entry_frame, width=90, height=15, bg='dark slate grey', fg='navajo white', 
+    entry =  tk.Text(entry_frame_submit, width=90, height=15, bg='dark slate grey', fg='navajo white', 
                       font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                       highlightthickness=3)
     entry.grid(row=1, column=1, sticky='nw', pady=5)
 
+    
+    current_time = datetime.now().strftime('%H:%M:%S')
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    date_time = f"{current_date} {current_time}"
+    
     def submit():
+        entry_text = entry.get("1.0", "end-1c")
+        entry_name_text = entry_name.get()
+        submit_entry(entry_name_text, date_time, entry_text)
         entry_name.delete(0, tk.END)
         entry.delete(1.0, tk.END)
+    
 
     # submit button
-    submit_button = tk.Button(entry_frame, text="Submit", bg='dark slate grey', fg='navajo white',
-                    font=("Lucida Sans Typewriter", 15), command=submit)
+    submit_button = tk.Button(entry_frame_submit, text="Submit", bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15), command = submit)
     submit_button.grid(row=2, column=1, sticky='nw', pady=5)
+
+def fetch():
+    global entry_frame_view
+
+    tk.Frame.lift(entry_frame_view)
+    
+    entries = fetch_entries_from_db()
+    print_entries = ''
+    if entries == []:
+        pass
+    else:
+        for entry in entries[0]:
+            print_entries += str(entry) + "\n"
+
+        entry_label = tk.Label(entry_frame_view, text=print_entries)
+        entry_label.grid()
 
 
 def blank_page():
-    global time, date, window
+    global time, date, window, entry_frame_view, entry_frame_submit
     #creates window for the home
     window = tk.Tk()
     window.title("Rolodex.V1")
@@ -61,6 +83,14 @@ def blank_page():
 
     window.grid_columnconfigure(1, weight=1)
     window.grid_rowconfigure(2, weight=1)
+
+    entry_frame_submit = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
+                               highlightthickness=3)
+    entry_frame_submit.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)
+
+    entry_frame_view = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
+                               highlightthickness=3)
+    entry_frame_view.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)
 
     #loading logo image from program files
     logo = Image.open("Rolodex_logo.png").resize((80, 80))
@@ -94,10 +124,17 @@ def blank_page():
     date.grid(row=0, column=0, sticky='se', padx=10)
     time.grid(row=1, column=0, sticky='se', padx=10)
 
+    journal_tile = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
+    journal_tile.grid(row=1, column=0, sticky="nsw", columnspan=4)
     #creates add entry button
-    add_entry = tk.Button(window, text="Add Entry", bg='dark slate grey', fg='navajo white',
+    add_entry = tk.Button(journal_tile, text="Add Entry", bg='dark slate grey', fg='navajo white',
                     font=("Lucida Sans Typewriter", 15), command=add_entry_mode)
-    add_entry.grid(row=1, column=0, sticky='nw')
+    add_entry.grid(row=0, column=1, sticky='nesw')
+
+    #show entries button
+    show_entries = tk.Button(journal_tile, text="Show Entries", bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15))
+    show_entries.grid(row=0, column=0, sticky='nesw', command=fetch())
 
 
     def on_closing():
