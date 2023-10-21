@@ -16,7 +16,7 @@ def bring_frame_to_front(frame):
 
 def clear_frame_entries(frame):
     for widget in frame.winfo_children():
-        widget.delete(0, tk.END)
+        widget.destroy()
 
 def add_entry_mode():
     global entry_frame_submit
@@ -65,7 +65,7 @@ def fetch():
     global entry_frame_view
 
     bring_frame_to_front(entry_frame_view)
-    #clear_frame_entries(entry_frame_view)
+    clear_frame_entries(entry_frame_view)
     entries = fetch_entries_from_db()
     
     if entries == []:
@@ -83,9 +83,16 @@ def fetch():
                         highlightthickness=3, width=110, wraplength=1000)
             entry_label.grid(row=row_num, columnspan=5, sticky='ns', padx=15)
 
+def delete():
+    global delete_id_entry
+    delete_id = delete_id_entry.get()
+    delete_entry(delete_id)
+    fetch()
+ 
+
 
 def blank_page():
-    global time, date, window, entry_frame_view, entry_frame_submit
+    global time, date, window, entry_frame_view, entry_frame_submit, delete_id_entry
     #creates window for the home
     window = tk.Tk()
     window.title("Rolodex.V1")
@@ -140,6 +147,7 @@ def blank_page():
 
     journal_tile = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
     journal_tile.grid(row=1, column=0, sticky="nsw", columnspan=4)
+
     #creates add entry button
     add_entry = tk.Button(journal_tile, text="Add Entry", bg='dark slate grey', fg='navajo white',
                     font=("Lucida Sans Typewriter", 15), command=add_entry_mode)
@@ -150,6 +158,18 @@ def blank_page():
                     font=("Lucida Sans Typewriter", 15), command=fetch)
     show_entries.grid(row=0, column=0, sticky='nesw')
 
+    #delete entries entry box
+    delete_label = tk.Label(journal_tile, text="Delete Entry: ", bg='dark slate grey', fg='navajo white',
+                    font=("Lucida Sans Typewriter", 15))
+    delete_label.grid(row=0, column=2, sticky='nesw')
+    delete_id_entry =  tk.Entry(journal_tile, width= 10, bg='navajo white', fg='dark slate grey',
+                           font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
+                           highlightthickness=3)
+    delete_id_entry.grid(row=0, column=3, sticky='w', pady=5)
+    
+    delete_button = tk.Button(journal_tile, text="Confirm", bg='dark slate grey', fg='navajo white', 
+                              font=("Lucida Sans Typewriter", 15), command=delete)
+    delete_button.grid(row=0, column=4, sticky='nesw')
 
     def on_closing():
         window.destroy()

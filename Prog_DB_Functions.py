@@ -27,10 +27,25 @@ def fetch_entries_from_db():
     #fetch entry info into table
     c.execute('SELECT *, oid FROM journal')
     entries = c.fetchall()
-    print(entries)
     
     #commit changes to databases after every change
     conn.commit()
     #close connection when finished
     conn.close()
     return entries
+
+def delete_entry(delete_id):
+    conn = sqlite3.connect('Rolodex.db')
+    #create cursor to interact with database
+    c = conn.cursor()
+
+    #fetch entry info into table
+    c.execute("DELETE FROM journal WHERE oid=:entry_id", {'entry_id': delete_id})
+    entries = c.fetchall()
+    print(entries)
+    
+    #commit changes to databases after every change
+    conn.commit()
+    #close connection when finished
+    conn.close()
+
