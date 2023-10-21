@@ -99,6 +99,7 @@ def delete():
     global delete_id_entry
     delete_id = delete_id_entry.get()
     delete_entry(delete_id)
+    delete_id_entry.delete(0, tk.END)
     fetch()
  
 
