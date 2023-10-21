@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from datetime import datetime
 from PIL import ImageTk, Image
 from Prog_DB_Functions import *
@@ -14,9 +15,8 @@ def update_time():
 def bring_frame_to_front(frame):
     frame.lift()
 
-def clear_frame_entries(frame):
-    for widget in frame.winfo_children():
-        widget.destroy()
+def clear_frame_entries(canvas):
+    canvas.delete('all')
 
 def add_entry_mode():
     global entry_frame_submit
@@ -49,11 +49,18 @@ def add_entry_mode():
     date_time = f"{current_date} {current_time}"
     
     def submit():
-        entry_text = entry.get("1.0", "end-1c")
-        entry_name_text = entry_name.get()
-        submit_entry(entry_name_text, date_time, entry_text)
-        entry_name.delete(0, tk.END)
-        entry.delete(1.0, tk.END)
+        if entry.get("1.0", "end-1c") == "":
+            tk.messagebox.showerror(title="Error", message="Entry cannot be blank")
+        
+        if entry_name.get() == "":
+            tk.messagebox.showerror(title="Error", message="Entry name cannot be blank")
+
+        else:
+            entry_text = entry.get("1.0", "end-1c")
+            entry_name_text = entry_name.get()
+            submit_entry(entry_name_text, date_time, entry_text)
+            entry_name.delete(0, tk.END)
+            entry.delete(1.0, tk.END)
     
 
     # submit button
@@ -62,26 +69,31 @@ def add_entry_mode():
     submit_button.grid(row=2, column=1, sticky='nw', pady=5)
 
 def fetch():
-    global entry_frame_view
+    global entry_canvas, entry_frame_view
 
     bring_frame_to_front(entry_frame_view)
-    clear_frame_entries(entry_frame_view)
+    clear_frame_entries(entry_canvas)
     entries = fetch_entries_from_db()
     
     if entries == []:
         pass
     else:
-        row_num =-1
+        label_height = 0
         for entry in reversed(entries):
-            row_num +=1
             print_entries = ''
-            for part in entry:
-                print_entries += str(part) + "\n"
+            split_date_time = entry[0].split()
+            date_split = split_date_time[0]
+            date = "".join(date_split)
+            time_split = split_date_time[1]
+            time = "".join(time_split)
+            print_entries = f'Date: {date} \nTime: {time} \nEntry ID: {entry[3]} \nName: {entry[1]} \n\n{entry[2]}'
 
             entry_label = tk.Label(entry_frame_view, text=print_entries, bg='dark slate grey', fg='navajo white', 
                         font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
-                        highlightthickness=3, width=110, wraplength=1000)
-            entry_label.grid(row=row_num, columnspan=5, sticky='ns', padx=15)
+                        highlightthickness=3, width=110, wraplength=1000, justify="left", anchor = 'w')
+            entry_canvas.create_window(0, label_height, window=entry_label, anchor="nw")
+            label_height += entry_label.winfo_reqheight()
+    entry_canvas.config(scrollregion=entry_canvas.bbox("all"))
 
 def delete():
     global delete_id_entry
@@ -92,7 +104,7 @@ def delete():
 
 
 def blank_page():
-    global time, date, window, entry_frame_view, entry_frame_submit, delete_id_entry
+    global time, date, window, entry_frame_submit, delete_id_entry, entry_canvas, entry_frame_view
     #creates window for the home
     window = tk.Tk()
     window.title("Rolodex.V1")
@@ -112,6 +124,16 @@ def blank_page():
     entry_frame_view = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
                                highlightthickness=3)
     entry_frame_view.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)
+    
+    #create scrollbar entry_view_frame
+    scrollbar = tk.Scrollbar(entry_frame_view, orient=tk.VERTICAL)
+    # Attach the scrollbar to the frame
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    # Create a canvas to contain the labels
+    entry_canvas = tk.Canvas(entry_frame_view, yscrollcommand=scrollbar.set, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=0)
+    entry_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    # Configure the scrollbar to control the canvas
+    scrollbar.config(command=entry_canvas.yview)
   
     #loading logo image from program files
     logo = Image.open("Rolodex_logo.png").resize((80, 80))
@@ -171,11 +193,13 @@ def blank_page():
                               font=("Lucida Sans Typewriter", 15), command=delete)
     delete_button.grid(row=0, column=4, sticky='nesw')
 
+
     def on_closing():
         window.destroy()
         exit()
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
+    fetch()
 
     update_time()
 

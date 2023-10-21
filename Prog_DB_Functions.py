@@ -42,7 +42,6 @@ def delete_entry(delete_id):
     #fetch entry info into table
     c.execute("DELETE FROM journal WHERE oid=:entry_id", {'entry_id': delete_id})
     entries = c.fetchall()
-    print(entries)
     
     #commit changes to databases after every change
     conn.commit()
