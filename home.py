@@ -38,7 +38,7 @@ def add_entry_mode():
                                 font=("Lucida Sans Typewriter", 15))
     entry_label.grid(row=1, column=0, sticky='ne', pady=5)
 
-    entry =  tk.Text(entry_frame_submit, width=90, height=15, bg='dark slate grey', fg='navajo white', 
+    entry =  tk.Text(entry_frame_submit, width=90, height=18, bg='dark slate grey', fg='navajo white', 
                       font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                       highlightthickness=3)
     entry.grid(row=1, column=1, sticky='nw', pady=5)
@@ -86,7 +86,7 @@ def fetch():
             date = "".join(date_split)
             time_split = split_date_time[1]
             time = "".join(time_split)
-            print_entries = f'Date: {date} \nTime: {time} \nEntry ID: {entry[3]} \nName: {entry[1]} \n\n{entry[2]}'
+            print_entries = f'Date: {date} \nTime: {time} \nEntry ID: {entry[3]} \nName: {entry[1]} \n\n{entry[2]}\n'
 
             entry_label = tk.Label(entry_frame_view, text=print_entries, bg='dark slate grey', fg='navajo white', 
                         font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
