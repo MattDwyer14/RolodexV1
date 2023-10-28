@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import scrolledtext 
 from datetime import datetime
 from PIL import ImageTk, Image
 from Prog_DB_Functions import *
@@ -38,7 +39,7 @@ def add_entry_mode():
                                 font=("Lucida Sans Typewriter", 15))
     entry_label.grid(row=1, column=0, sticky='ne', pady=5)
 
-    entry =  tk.Text(entry_frame_submit, width=90, height=18, bg='dark slate grey', fg='navajo white', 
+    entry =  tk.scrolledtext.ScrolledText(entry_frame_submit, width=90, height=18, bg='dark slate grey', fg='navajo white', 
                       font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                       highlightthickness=3)
     entry.grid(row=1, column=1, sticky='nw', pady=5)
