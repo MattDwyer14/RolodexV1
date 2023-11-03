@@ -2,7 +2,7 @@ import tkinter as tk
 from datetime import datetime
 from PIL import ImageTk, Image
 from Prog_DB_Functions import *
-from journal_page import journal_run
+from journal_page import *
 
 def update_time():
     global time, date, window
@@ -61,7 +61,9 @@ def home_page():
     date.grid(row=0, column=0, sticky='se', padx=10)
     time.grid(row=1, column=0, sticky='se', padx=10)
 
-    journal_button = tk.Button(window, text="Journal", command=journal_run)
+    journal_button = tk.Button(window, text="Journal", bg='navajo white', fg='dark slate grey',
+                           font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
+                           highlightthickness=3, command=lambda: journal_run(window))
     journal_button.grid(row=1, column=0, sticky='nsew', padx=10)
 
     def on_closing():

@@ -105,8 +105,8 @@ def delete():
  
 
 
-def journal_run():
-    global time, window, date, entry_frame_submit, delete_id_entry, entry_canvas, entry_frame_view
+def journal_run(window):
+    global entry_frame_submit, delete_id_entry, entry_canvas, entry_frame_view
 
     entry_frame_submit = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
                                highlightthickness=3)
@@ -125,38 +125,6 @@ def journal_run():
     entry_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
     # Configure the scrollbar to control the canvas
     scrollbar.config(command=entry_canvas.yview)
-  
-    #loading logo image from program files
-    logo = Image.open("Rolodex_logo.png").resize((80, 80))
-    logo_image = ImageTk.PhotoImage(logo)
-    border_thickness = 3
-
-    #cancas for logo image. canvas' are better for laying images
-    canvas = tk.Canvas(window, width=logo.width + 2 * border_thickness, height=logo.height + 2 * border_thickness,
-                       bg='navajo white', bd=0, highlightthickness=0)
-    canvas.create_image((logo.width + 2 * border_thickness) / 2, (logo.height + 2 * border_thickness) / 2,
-                        image=logo_image)
-    canvas.grid(row=0, column=3, sticky="e")
-
-    #title for program
-    title = tk.Label(text="Rolodex.V1", bg='dark slate grey', fg='navajo white', 
-                     font=("Lucida Sans Typewriter", 50))
-    title.grid(row=0, column=0, columnspan=1, sticky="w")
-
-    #defining date and time and positioning label
-    current_time = datetime.now().strftime('%H:%M:%S')
-    current_date = datetime.now().strftime('%Y-%m-%d')
-
-    date_time_frame = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
-    date_time_frame.grid(row=0, column=2, sticky="nsw", columnspan=1)
-
-    date = tk.Label(date_time_frame, text=current_date, bg='dark slate grey', fg='navajo white',
-                    font=("Lucida Sans Typewriter", 15))
-    time = tk.Label(date_time_frame, text=current_time, bg='dark slate grey', fg='navajo white',
-                    font=("Lucida Sans Typewriter", 15))
-    
-    date.grid(row=0, column=0, sticky='se', padx=10)
-    time.grid(row=1, column=0, sticky='se', padx=10)
 
     journal_tile = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', highlightthickness=3)
     journal_tile.grid(row=1, column=0, sticky="nsw", columnspan=4)
@@ -178,7 +146,7 @@ def journal_run():
     delete_id_entry =  tk.Entry(journal_tile, width= 10, bg='navajo white', fg='dark slate grey',
                            font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
                            highlightthickness=3)
-    delete_id_entry.grid(row=0, column=3, sticky='w', pady=5)
+    delete_id_entry.grid(row=0, column=3, sticky='w', pady=5, padx=5)
     
     delete_button = tk.Button(journal_tile, text="Confirm", bg='dark slate grey', fg='navajo white', 
                               font=("Lucida Sans Typewriter", 15), command=delete)
