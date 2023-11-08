@@ -108,6 +108,8 @@ def delete():
 def journal_run(window):
     global entry_frame_submit, delete_id_entry, entry_canvas, entry_frame_view
 
+    
+
     entry_frame_submit = tk.Frame(window, bg="dark slate grey", highlightbackground='navajo white', 
                                highlightthickness=3)
     entry_frame_submit.grid(row=2, column=0, columnspan=4, sticky='nsew', pady=5)

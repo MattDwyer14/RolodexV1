@@ -3,6 +3,7 @@ from datetime import datetime
 from PIL import ImageTk, Image
 from Prog_DB_Functions import *
 from journal_page import *
+from weather_tile import *
 
 def update_time():
     global time, date, window
@@ -66,6 +67,11 @@ def home_page():
                            highlightthickness=3, command=lambda: journal_run(window))
     journal_button.grid(row=1, column=0, sticky='nsew', padx=10)
 
+    weather_button = tk.Button(window, text="Weather", bg='navajo white', fg='dark slate grey',
+                           font=("Lucida Sans Typewriter", 15), highlightbackground='navajo white', 
+                           highlightthickness=3)
+    
+    weather_button.grid(row=2, column=0, sticky='nsew', padx=10)
     def on_closing():
         window.destroy()
         exit()
